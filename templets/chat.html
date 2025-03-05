@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="chat-container">
+    <div class="quick-links">
+        <h3>Quick Questions</h3>
+        <form method="post" action="{{ url_for('chat') }}">
+            <button type="submit" name="message" value="What is the schedule for the symposium?">Show Schedule</button>
+            <button type="submit" name="message" value="Tell me about the keynote speaker">About Speaker</button>
+            <button type="submit" name="message" value="What workshops are available?">Workshops</button>
+            <button type="submit" name="message" value="What's in the environment showcase?">Environment Showcase</button>
+        </form>
+    </div>
+
+    <div class="chat-messages">
+        {% if not conversation %}
+            <div class="message assistant">
+                <p>Welcome to the Service-Learning Symposium chatbot! How can I help you today?</p>
+            </div>
+        {% endif %}
+        
+        {% for message in conversation %}
+            <div class="message user">
+                <p>{{ message.user }}</p>
+            </div>
+            <div class="message assistant">
+                <p>{{ message.assistant }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="chat-input">
+        <form method="post" action="{{ url_for('chat') }}">
+            <input type="text" name="message" placeholder="Ask about the symposium..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
